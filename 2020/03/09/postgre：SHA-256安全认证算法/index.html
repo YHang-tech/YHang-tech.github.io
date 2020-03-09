@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020 | YHang-tech&#39;s Personal Blog</title>
+  <title>postgreSQL:SHA-256安全认证算法 | YHang-tech&#39;s Personal Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="YHang-tech&#39;s Personal Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2020/index.html">
+  <meta name="description" content="由于数据库系统实现课程要求,对postgreSQL数据库进行了部分分析。 我负责的部分是SHA-256安全认证机制的分析，所以今天把分析成果稍稍展示一下。SHA-256是一个哈希函数，负责将传递的消息进行加密，得到256-bit的加密过的消息摘要。所以下面会介绍如何通过SHA-256将一条信息逐步加密： SHA-256算法实现前置条件： 32-bit 是SHA-256的最小基本处理单元。 SHA-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="postgreSQL:SHA-256安全认证算法">
+<meta property="og:url" content="http://yoursite.com/2020/03/09/postgre%EF%BC%9ASHA-256%E5%AE%89%E5%85%A8%E8%AE%A4%E8%AF%81%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="YHang-tech&#39;s Personal Blog">
+<meta property="og:description" content="由于数据库系统实现课程要求,对postgreSQL数据库进行了部分分析。 我负责的部分是SHA-256安全认证机制的分析，所以今天把分析成果稍稍展示一下。SHA-256是一个哈希函数，负责将传递的消息进行加密，得到256-bit的加密过的消息摘要。所以下面会介绍如何通过SHA-256将一条信息逐步加密： SHA-256算法实现前置条件： 32-bit 是SHA-256的最小基本处理单元。 SHA-">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="d:/learnblog/blog/themes/yilia/source/img/2020-03-09/2020-03-09-c.png">
+<meta property="article:published_time" content="2020-03-09T15:15:22.000Z">
+<meta property="article:modified_time" content="2020-03-09T16:08:39.154Z">
 <meta property="article:author" content="YHang-tech">
+<meta property="article:tag" content="database;SHA-256;algorithm">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:/learnblog/blog/themes/yilia/source/img/2020-03-09/2020-03-09-c.png">
   
     <link rel="alternative" href="/atom.xml" title="YHang-tech&#39;s Personal Blog" type="application/atom+xml">
   
@@ -150,36 +157,74 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-postgre：SHA-256安全认证算法" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/09/postgre%EF%BC%9ASHA-256%E5%AE%89%E5%85%A8%E8%AE%A4%E8%AF%81%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-03-09T15:15:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-09</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/09/postgre%EF%BC%9ASHA-256%E5%AE%89%E5%85%A8%E8%AE%A4%E8%AF%81%E7%AE%97%E6%B3%95/">postgreSQL:SHA-256安全认证算法</a>
+    <h1 class="article-title" itemprop="name">
+      postgreSQL:SHA-256安全认证算法
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/03/09/postgre%EF%BC%9ASHA-256%E5%AE%89%E5%85%A8%E8%AE%A4%E8%AF%81%E7%AE%97%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2020-03-09T15:15:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>由于数据库系统实现课程要求,对postgreSQL数据库进行了部分分析。</p>
+<p>我负责的部分是SHA-256安全认证机制的分析，所以今天把分析成果稍稍展示一下。SHA-256是一个哈希函数，负责将传递的消息进行加密，得到256-bit的加密过的消息摘要。所以下面会介绍如何通过SHA-256将一条信息逐步加密：</p>
+<h2 id="SHA-256算法实现"><a href="#SHA-256算法实现" class="headerlink" title="SHA-256算法实现"></a>SHA-256算法实现</h2><h3 id="前置条件："><a href="#前置条件：" class="headerlink" title="前置条件："></a>前置条件：</h3><ul>
+<li>32-bit 是SHA-256的最小基本处理单元。</li>
+<li>SHA-256规定8个哈希值和64个哈希常量，皆为32-bit。</li>
+<li>消息预处理，将消息附加填充位（100……000）和附加长度信息，使其</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">消息原本长度+附加填充位长度（长度随随情况而定）+64（长度信息的位数）&#x3D;&#x3D;512的整数倍</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="算法流程："><a href="#算法流程：" class="headerlink" title="算法流程："></a>算法流程：</h3><ol>
+<li>将消息分成n个512-bit大小的块</li>
+<li>将每个块分解成基本单元word，可以直接分成16个word，再通过这16个word 构造出其余48个word，这一步共得出64个word ，w[0]…w[63] </li>
+<li>进行n次迭代，n是消息分成的块数。消息摘要的初始值是8个哈希值</li>
+</ol>
+<img src="D:\learnblog\blog\themes\yilia\source\img\2020-03-09\2020-03-09-c.png" style="zoom:61%;" />
+
+<p>每一次迭代中，通过旧消息摘要和Mi由映射函数将其计算得到新消息摘要，再将新消息摘要作为下一次迭代的一个输入，重复n次。</p>
+<h2 id="映射函数："><a href="#映射函数：" class="headerlink" title="映射函数："></a>映射函数：</h2>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢打赏<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -191,111 +236,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/03/09/postgre%EF%BC%9ASHA-256%E5%AE%89%E5%85%A8%E8%AE%A4%E8%AF%81%E7%AE%97%E6%B3%95/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/07/%E4%BB%8EHalo%E5%BC%80%E5%A7%8B%EF%BC%9A%E5%AD%A6%E4%B9%A0Gradle/" class="archive-article-date">
-  	<time datetime="2020-03-07T06:01:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-07</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/03/07/%E4%BB%8EHalo%E5%BC%80%E5%A7%8B%EF%BC%9A%E5%AD%A6%E4%B9%A0Gradle/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">从Halo开始：学习Gradle</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/07/%E4%BB%8EHalo%E5%BC%80%E5%A7%8B%EF%BC%9A%E5%AD%A6%E4%B9%A0Gradle/">从Halo开始：学习Gradle</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Personal study notes;Unprofessional</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/27/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/" class="archive-article-date">
-  	<time datetime="2020-02-27T08:32:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/02/27/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/">我的第一篇博客文章</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/27/hello-world/" class="archive-article-date">
-  	<time datetime="2020-02-27T08:09:57.491Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/02/27/hello-world/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -318,8 +358,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

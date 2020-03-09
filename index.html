@@ -152,6 +152,98 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-postgre：SHA-256安全认证算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/09/postgre%EF%BC%9ASHA-256%E5%AE%89%E5%85%A8%E8%AE%A4%E8%AF%81%E7%AE%97%E6%B3%95/">postgreSQL:SHA-256安全认证算法</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/09/postgre%EF%BC%9ASHA-256%E5%AE%89%E5%85%A8%E8%AE%A4%E8%AF%81%E7%AE%97%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2020-03-09T15:15:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>由于数据库系统实现课程要求,对postgreSQL数据库进行了部分分析。</p>
+<p>我负责的部分是SHA-256安全认证机制的分析，所以今天把分析成果稍稍展示一下。SHA-256是一个哈希函数，负责将传递的消息进行加密，得到256-bit的加密过的消息摘要。所以下面会介绍如何通过SHA-256将一条信息逐步加密：</p>
+<h2 id="SHA-256算法实现"><a href="#SHA-256算法实现" class="headerlink" title="SHA-256算法实现"></a>SHA-256算法实现</h2><h3 id="前置条件："><a href="#前置条件：" class="headerlink" title="前置条件："></a>前置条件：</h3><ul>
+<li>32-bit 是SHA-256的最小基本处理单元。</li>
+<li>SHA-256规定8个哈希值和64个哈希常量，皆为32-bit。</li>
+<li>消息预处理，将消息附加填充位（100……000）和附加长度信息，使其</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">消息原本长度+附加填充位长度（长度随随情况而定）+64（长度信息的位数）&#x3D;&#x3D;512的整数倍</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="算法流程："><a href="#算法流程：" class="headerlink" title="算法流程："></a>算法流程：</h3><ol>
+<li>将消息分成n个512-bit大小的块</li>
+<li>将每个块分解成基本单元word，可以直接分成16个word，再通过这16个word 构造出其余48个word，这一步共得出64个word ，w[0]…w[63] </li>
+<li>进行n次迭代，n是消息分成的块数。消息摘要的初始值是8个哈希值</li>
+</ol>
+<img src="D:\learnblog\blog\themes\yilia\source\img\2020-03-09\2020-03-09-c.png" style="zoom:61%;" />
+
+<p>每一次迭代中，通过旧消息摘要和Mi由映射函数将其计算得到新消息摘要，再将新消息摘要作为下一次迭代的一个输入，重复n次。</p>
+<h2 id="映射函数："><a href="#映射函数：" class="headerlink" title="映射函数："></a>映射函数：</h2>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">database;SHA-256;algorithm</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/09/postgre%EF%BC%9ASHA-256%E5%AE%89%E5%85%A8%E8%AE%A4%E8%AF%81%E7%AE%97%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-从Halo开始：学习Gradle" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -194,19 +286,7 @@
 <p>DSL，用于声明要在脚本中使用的插件。</p>
 <p>使用时，该<code>plugins {}</code>块仅允许使用完整构建脚本编程语言的严格子集。值必须是文字的（例如，常量字符串，而不是变量）。允许插入字符串<code>PluginDependencySpec.version(java.lang.String)</code>，但是替换值必须来自Gradle属性。</p>
 <p>此外，该<code>plugins {}</code>块必须是构建脚本的第一个代码。对此有一个例外，因为<code>buildscript {</code>}块（用于声明脚本依赖项）必须位于它之前。</p>
-<h3 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h3><table>
-<thead>
-<tr>
-<th>Method</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>id(id)</code></td>
-<td>Add a dependency on the plugin with the given id.</td>
-</tr>
-</tbody></table>
-<h3 id="Method-details"><a href="#Method-details" class="headerlink" title="Method details"></a>Method details</h3><h4 id="PluginDependencySpec-id-String-id"><a href="#PluginDependencySpec-id-String-id" class="headerlink" title="PluginDependencySpec id(String id)"></a><code>PluginDependencySpec id(String id)</code></h4><p>在具有给定id的插件上添加依赖项:</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a><em>使用方法</em></h3><h4 id="PluginDependencySpec-id-String-id"><a href="#PluginDependencySpec-id-String-id" class="headerlink" title="PluginDependencySpec id(String id)"></a><code>PluginDependencySpec id(String id)</code></h4><p>在具有给定id的插件上添加依赖项:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id &quot;org.company.myplugin&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>可以通过返回值的方法指定其他约束（例如版本号）:</p>
@@ -219,6 +299,25 @@
 
 <h3 id="使用的插件"><a href="#使用的插件" class="headerlink" title="使用的插件"></a>使用的插件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.boot</span><br></pre></td></tr></table></figure>
 
+<p>需要使用SpringBoot 而插入的插件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">io.freefair.lombok</span><br></pre></td></tr></table></figure>
+
+<p>自动lombok和delombok配置的插件</p>
+<p>lombok 是Java库，Lombok提供了一组有用的注解，通过“<strong><em>@注解名</em></strong> ”的方法实现。</p>
+<p>如：@Setter ：注解在类或字段，注解在类时为所有字段生成setter方法，注解在字段上时只为该字段生成setter方法。</p>
+<p>@Getter ：使用方法同上，区别在于生成的是getter方法。</p>
+<p>@ToString ：注解在类，添加toString方法。</p>
+<p>@EqualsAndHashCode： 注解在类，生成hashCode和equals方法。</p>
+<p>@NoArgsConstructor： 注解在类，生成无参的构造方法。</p>
+<p>@RequiredArgsConstructor： 注解在类，为类中需要特殊处理的字段生成构造方法，比如final和被@NonNull注解的字段。</p>
+<p>@AllArgsConstructor： 注解在类，生成包含类中所有字段的构造方法。</p>
+<p>@Data： 注解在类，生成setter/getter、equals、canEqual、hashCode、toString方法，如为final属性，则不会为该属性生成setter方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">checkstyle</span><br></pre></td></tr></table></figure>
+
+<p>代码检查;检查源文件编码规范。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">io.spring.dependency-management</span><br></pre></td></tr></table></figure>
+
+<p>提供类似Maven的依赖管理功能的Gradle插件。</p>
 
       
 
@@ -512,6 +611,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Personal study notes;Unprofessional</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">database;SHA-256;algorithm</a>
               </li>
             
             <div class="clearfix"></div>

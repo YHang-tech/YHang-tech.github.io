@@ -16,7 +16,7 @@
 <meta property="og:description" content="Halo在GitHub上的一个轻量级开源项目，一款现代化的个人独立博客系统。 非学习用开源项目，但如果能通过自己理解项目构建、源码，对初学者来说，未必不是一个好的选择。 gradle将程序自动化的构建工具，集编译源代码、运行测试、拷贝Class文件到目标目录、签名、打包、依赖管理等功能于一体。 构建包括编译、连接以及打包。通过Gradle，能做什么？  下载依赖 源码编译成二进制代码 打包生成的二">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-03-07T06:01:17.000Z">
-<meta property="article:modified_time" content="2020-03-07T15:47:38.267Z">
+<meta property="article:modified_time" content="2020-03-08T11:27:51.438Z">
 <meta property="article:author" content="YHang-tech">
 <meta property="article:tag" content="Personal study notes;Unprofessional">
 <meta name="twitter:card" content="summary">
@@ -197,19 +197,7 @@
 <p>DSL，用于声明要在脚本中使用的插件。</p>
 <p>使用时，该<code>plugins {}</code>块仅允许使用完整构建脚本编程语言的严格子集。值必须是文字的（例如，常量字符串，而不是变量）。允许插入字符串<code>PluginDependencySpec.version(java.lang.String)</code>，但是替换值必须来自Gradle属性。</p>
 <p>此外，该<code>plugins {}</code>块必须是构建脚本的第一个代码。对此有一个例外，因为<code>buildscript {</code>}块（用于声明脚本依赖项）必须位于它之前。</p>
-<h3 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h3><table>
-<thead>
-<tr>
-<th>Method</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>id(id)</code></td>
-<td>Add a dependency on the plugin with the given id.</td>
-</tr>
-</tbody></table>
-<h3 id="Method-details"><a href="#Method-details" class="headerlink" title="Method details"></a>Method details</h3><h4 id="PluginDependencySpec-id-String-id"><a href="#PluginDependencySpec-id-String-id" class="headerlink" title="PluginDependencySpec id(String id)"></a><code>PluginDependencySpec id(String id)</code></h4><p>在具有给定id的插件上添加依赖项:</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a><em>使用方法</em></h3><h4 id="PluginDependencySpec-id-String-id"><a href="#PluginDependencySpec-id-String-id" class="headerlink" title="PluginDependencySpec id(String id)"></a><code>PluginDependencySpec id(String id)</code></h4><p>在具有给定id的插件上添加依赖项:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id &quot;org.company.myplugin&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>可以通过返回值的方法指定其他约束（例如版本号）:</p>
@@ -222,6 +210,25 @@
 
 <h3 id="使用的插件"><a href="#使用的插件" class="headerlink" title="使用的插件"></a>使用的插件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.boot</span><br></pre></td></tr></table></figure>
 
+<p>需要使用SpringBoot 而插入的插件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">io.freefair.lombok</span><br></pre></td></tr></table></figure>
+
+<p>自动lombok和delombok配置的插件</p>
+<p>lombok 是Java库，Lombok提供了一组有用的注解，通过“<strong><em>@注解名</em></strong> ”的方法实现。</p>
+<p>如：@Setter ：注解在类或字段，注解在类时为所有字段生成setter方法，注解在字段上时只为该字段生成setter方法。</p>
+<p>@Getter ：使用方法同上，区别在于生成的是getter方法。</p>
+<p>@ToString ：注解在类，添加toString方法。</p>
+<p>@EqualsAndHashCode： 注解在类，生成hashCode和equals方法。</p>
+<p>@NoArgsConstructor： 注解在类，生成无参的构造方法。</p>
+<p>@RequiredArgsConstructor： 注解在类，为类中需要特殊处理的字段生成构造方法，比如final和被@NonNull注解的字段。</p>
+<p>@AllArgsConstructor： 注解在类，生成包含类中所有字段的构造方法。</p>
+<p>@Data： 注解在类，生成setter/getter、equals、canEqual、hashCode、toString方法，如为final属性，则不会为该属性生成setter方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">checkstyle</span><br></pre></td></tr></table></figure>
+
+<p>代码检查;检查源文件编码规范。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">io.spring.dependency-management</span><br></pre></td></tr></table></figure>
+
+<p>提供类似Maven的依赖管理功能的Gradle插件。</p>
 
       
 
@@ -325,6 +332,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2020/03/09/postgre%EF%BC%9ASHA-256%E5%AE%89%E5%85%A8%E8%AE%A4%E8%AF%81%E7%AE%97%E6%B3%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          postgreSQL:SHA-256安全认证算法
+        
+      </div>
+    </a>
   
   
     <a href="/2020/02/27/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/" id="article-nav-older" class="article-nav-link-wrap">
@@ -455,6 +471,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Personal study notes;Unprofessional</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">database;SHA-256;algorithm</a>
               </li>
             
             <div class="clearfix"></div>
