@@ -188,7 +188,7 @@
 <li>将每个块分解成基本单元word，可以直接分成16个word，再通过这16个word 构造出其余48个word，这一步共得出64个word ，w[0]…w[63] </li>
 <li>进行n次迭代，n是消息分成的块数。消息摘要的初始值是8个哈希值</li>
 </ol>
-<img src="D:\learnblog\blog\themes\yilia\source\img\2020-03-09\2020-03-09-c.png" style="zoom:61%;" />
+<img src="https://github.com/YHang-tech/YHang-tech.github.io/tree/master/img/2020-03-09/2020-03-09-c.png" style="zoom:61%;" />
 
 <p>每一次迭代中，通过旧消息摘要和Mi由映射函数将其计算得到新消息摘要，再将新消息摘要作为下一次迭代的一个输入，重复n次。</p>
 <h2 id="映射函数："><a href="#映射函数：" class="headerlink" title="映射函数："></a>映射函数：</h2>
