@@ -152,69 +152,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-test" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/03/12/test/">test</a>
-    </h1>
-  
-
-        
-        <a href="/2020/03/12/test/" class="archive-article-date">
-  	<time datetime="2020-03-12T12:18:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/2020/03/12/test/2020-03-09-a.png" alt="Test"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/03/12/test/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-postgreSQL-SHA-256" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -247,13 +184,37 @@
 
 
 <h3 id="算法流程："><a href="#算法流程：" class="headerlink" title="算法流程："></a>算法流程：</h3><ol>
-<li>将消息分成n个512-bit大小的块</li>
-<li>将每个块分解成基本单元word，可以直接分成16个word，再通过这16个word 构造出其余48个word，这一步共得出64个word ，w[0]…w[63] </li>
-<li>进行n次迭代，n是消息分成的块数。消息摘要的初始值是8个哈希值</li>
+<li><p>将消息分成n个512-bit大小的块</p>
+<p><img src="/2020/03/10/postgreSQL-SHA-256/2020-03-09-a.png" alt="分解图"></p>
+</li>
+<li><p>将每个块分解成基本单元word，可以直接分成16个word，再通过这16个word 构造出其余48个word，这一步共得出64个word ，w[0]…w[63] </p>
+</li>
+<li><p>进行n次迭代，n是消息分成的块数。消息摘要的初始值是8个哈希值</p>
+</li>
 </ol>
-<p><img src="postgreSQL-SHA-256%5C2020-03-09-c.png" alt="Image text"></p>
+<img src="/2020/03/10/postgreSQL-SHA-256/2020-03-09-c.png" alt="初始值" style="zoom:60%;">
+
 <p>每一次迭代中，通过旧消息摘要和Mi由映射函数将其计算得到新消息摘要，再将新消息摘要作为下一次迭代的一个输入，重复n次。</p>
-<h2 id="映射函数："><a href="#映射函数：" class="headerlink" title="映射函数："></a>映射函数：</h2>
+<img src="/2020/03/10/postgreSQL-SHA-256/2020-03-09-b.png" alt="迭代图" style="zoom:60%;">
+
+
+
+<h2 id="映射函数："><a href="#映射函数：" class="headerlink" title="映射函数："></a>映射函数：</h2><p><img src="/2020/03/10/postgreSQL-SHA-256/2020-03-09-d.png" alt="映射函数"></p>
+<p>映射关系是每次迭代过程中会进行的数值计算。</p>
+<p>上图中，每次计算新消息摘要会进行64次循环计算；蓝色方框代表固定逻辑函数；红色方框代表取余运算，使结果不超过2^32。</p>
+<p>每次计算的输入：</p>
+<ul>
+<li>旧消息摘要（初始摘要或者上次计算结果）</li>
+<li>Wt 每一个块消息分解产生的64个word，依次序加入计算</li>
+<li>Kt 64个哈希常量，依次加入计算</li>
+</ul>
+<p>计算的输出：</p>
+<ul>
+<li>一个新的最小单元32-bit的数据，即word[A]</li>
+</ul>
+<p>计算结果：由word[A]开头，其余7个word 由旧消息摘要右移32-bit组成的消息摘要。</p>
+<p>参考资料：<a href="https://blog.csdn.net/u011583927/article/details/80905740" target="_blank" rel="noopener">CSDN-随煜而安</a></p>
+
       
 
       
