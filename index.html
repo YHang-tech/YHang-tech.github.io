@@ -152,6 +152,221 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-java注解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/18/java%E6%B3%A8%E8%A7%A3/">java注解</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/18/java%E6%B3%A8%E8%A7%A3/" class="archive-article-date">
+  	<time datetime="2020-03-18T03:50:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="注解Annotation-用法-："><a href="#注解Annotation-用法-：" class="headerlink" title="注解Annotation 用法 ："></a>注解Annotation 用法 ：</h2><p>注解又称Java 标注，是一种注释机制</p>
+<p>java中，类、方法、变量、参数、包都可以被标注，java可以通过反射获得标注内容。</p>
+<p>java 可以在运行时获得标注内容</p>
+<p>Java自定义了7个注解</p>
+<p>在代码中作用的注解：</p>
+<p>@Override 检查该方法是否被重写，在父类或接口中未发现该方法，编译报错</p>
+<p>@Deprecated 标记过时方法，若使用该方法，编译报错</p>
+<p>@SuppressWarnings 指示编译器去忽略注解中声明的警告</p>
+<p>作用在其他注解中的注解（元注解）：</p>
+<p>@Retention - 标识这个注解怎么保存，是只在代码中，还是编入class文件中，或者是在运行时可以通过反射访问。</p>
+<p>@Documented - 标记这些注解是否包含在用户文档中。</p>
+<p>@Target - 标记这个注解应该是哪种 Java 成员。</p>
+<p>@Inherited - 标记这个注解是继承于哪个注解类(默认 注解并没有继承于任何子类)</p>
+<h3 id="Annotation-通用定义"><a href="#Annotation-通用定义" class="headerlink" title="Annotation 通用定义"></a>Annotation 通用定义</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Documented</span><br><span class="line">@Target(ElementType.TYPE)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">public @interface MyAnnotation1 &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<p>上面的作用是定义一个 Annotation，它的名字是 MyAnnotation1。定义了 MyAnnotation1 之后，我们可以在代码中通过 “@MyAnnotation1” 来使用它。 其它的，@Documented, @Target, @Retention, @interface 都是来修饰 MyAnnotation1 的。下面分别说说它们的含义：</p>
+<p><strong>(01) @interface</strong></p>
+<p>使用 @interface 定义注解时，意味着它实现了 java.lang.annotation.Annotation 接口，即该注解就是一个Annotation。</p>
+<p>定义 Annotation 时，@interface 是必须的。</p>
+<p>注意：它和我们通常的 implemented 实现接口的方法不同。Annotation 接口的实现细节都由编译器完成。通过 @interface 定义注解后，该注解不能继承其他的注解或接口。</p>
+<p><strong>(02) @Documented</strong></p>
+<p>类和方法的 Annotation 在缺省情况下是不出现在 javadoc 中的。如果使用 @Documented 修饰该 Annotation，则表示它可以出现在 javadoc 中。</p>
+<p>定义 Annotation 时，@Documented 可有可无；若没有定义，则 Annotation 不会出现在 javadoc 中。</p>
+<p><strong>(03) @Target(ElementType.TYPE)</strong></p>
+<p>前面我们说过，ElementType 是 Annotation 的类型属性。而 @Target 的作用，就是来指定 Annotation 的类型属性。</p>
+<p>@Target(ElementType.TYPE) 的意思就是指定该 Annotation 的类型是 ElementType.TYPE。这就意味着，MyAnnotation1 是来修饰”类、接口（包括注释类型）或枚举声明”的注解。</p>
+<p>定义 Annotation 时，@Target 可有可无。若有 @Target，则该 Annotation 只能用于它所指定的地方；若没有 @Target，则该 Annotation 可以用于任何地方。</p>
+<p><strong>(04) @Retention(RetentionPolicy.RUNTIME)</strong></p>
+<p>前面我们说过，RetentionPolicy 是 Annotation 的策略属性，而 @Retention 的作用，就是指定 Annotation 的策略属性。</p>
+<p>@Retention(RetentionPolicy.RUNTIME) 的意思就是指定该 Annotation 的策略是 RetentionPolicy.RUNTIME。这就意味着，编译器会将该 Annotation 信息保留在 .class 文件中，并且能被虚拟机读取。</p>
+<p>定义 Annotation 时，@Retention 可有可无。若没有 @Retention，则默认是 RetentionPolicy.CLASS。</p>
+<h3 id="常用注解-Deprecated"><a href="#常用注解-Deprecated" class="headerlink" title="常用注解 @Deprecated"></a>常用注解 @Deprecated</h3><p>@Deprecated 的定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Documented</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">public @interface Deprecated &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<p>(01) @interface – 它的用来修饰 Deprecated，意味着 Deprecated 实现了 java.lang.annotation.Annotation 接口；即 Deprecated 就是一个注解。 </p>
+<p>(02) @Documented – 它的作用是说明该注解能出现在 javadoc 中。</p>
+<p>(03) @Retention(RetentionPolicy.RUNTIME) – 它的作用是指定 Deprecated 的策略是 RetentionPolicy.RUNTIME。这就意味着，编译器会将Deprecated 的信息保留在 .class 文件中，并且能被虚拟机读取。</p>
+<p>(04) @Deprecated 所标注内容，不再被建议使用。</p>
+<p>例如，若某个方法被 @Deprecated 标注，则该方法不再被建议使用。如果有开发人员试图使用或重写被 @Deprecated 标示的方法，编译器会给相应的提示信息。示例如下:</p>
+<p><img src="/2020/03/18/java%E6%B3%A8%E8%A7%A3/2020-03-18-a.jpg" alt></p>
+<h3 id="常用注解Inherited"><a href="#常用注解Inherited" class="headerlink" title="常用注解Inherited"></a><strong>常用注解Inherited</strong></h3><p>@Inherited 的定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Documented</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Target(ElementType.ANNOTATION_TYPE)</span><br><span class="line">public @interface Inherited &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ul>
+<li>(01) @interface – 它的用来修饰 Inherited，意味着 Inherited 实现了 java.lang.annotation.Annotation 接口；即 Inherited 就是一个注解。</li>
+<li>(02) @Documented – 它的作用是说明该注解能出现在 javadoc 中。</li>
+<li>(03) @Retention(RetentionPolicy.RUNTIME) – 它的作用是指定 Inherited 的策略是 RetentionPolicy.RUNTIME。这就意味着，编译器会将 Inherited 的信息保留在 .class 文件中，并且能被虚拟机读取。</li>
+<li>(04) @Target(ElementType.ANNOTATION_TYPE) – 它的作用是指定 Inherited 的类型是 ANNOTATION_TYPE。这就意味着，@Inherited 只能被用来标注 “Annotation 类型”。</li>
+<li>(05) @Inherited 的含义是，它所标注的Annotation将具有继承性。</li>
+</ul>
+<p>假设，我们定义了某个 Annotaion，它的名称是 MyAnnotation，并且 MyAnnotation 被标注为 @Inherited。现在，某个类 Base 使用了</p>
+<p>MyAnnotation，则 Base 具有了”具有了注解 MyAnnotation”；现在，Sub 继承了 Base，由于 MyAnnotation 是 @Inherited的(具有继承性)，所以，Sub 也 “具有了注解 MyAnnotation”。</p>
+<p>@Inherited 的使用示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">## InheritableSon.java</span><br><span class="line"></span><br><span class="line">**import** java.lang.annotation.Target;</span><br><span class="line">**import** java.lang.annotation.ElementType;</span><br><span class="line">**import** java.lang.annotation.Retention;</span><br><span class="line">**import** java.lang.annotation.RetentionPolicy;</span><br><span class="line">**import** java.lang.annotation.Inherited;</span><br><span class="line"></span><br><span class="line">**&#x2F;\**</span><br><span class="line"> \* 自定义的Annotation。</span><br><span class="line"> \*&#x2F;**</span><br><span class="line">@Target(ElementType.TYPE)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Inherited</span><br><span class="line">@**interface** Inheritable</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Inheritable</span><br><span class="line">**class** InheritableFather</span><br><span class="line">&#123;</span><br><span class="line">  **public** InheritableFather() &#123;</span><br><span class="line">    *&#x2F;&#x2F; InheritableBase是否具有 Inheritable Annotation*</span><br><span class="line">    System.out.println(&quot;InheritableFather:&quot;+InheritableFather.**class**.isAnnotationPresent(Inheritable.**class**));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">**&#x2F;\**</span><br><span class="line"> \* InheritableSon 类只是继承于 InheritableFather，</span><br><span class="line"> \*&#x2F;**</span><br><span class="line">**public** **class** InheritableSon **extends** InheritableFather</span><br><span class="line">&#123;</span><br><span class="line">  **public** InheritableSon() &#123;</span><br><span class="line">    **super**();   *&#x2F;&#x2F; 调用父类的构造函数*</span><br><span class="line">    *&#x2F;&#x2F; InheritableSon类是否具有 Inheritable Annotation*</span><br><span class="line">    System.out.println(&quot;InheritableSon:&quot;+InheritableSon.**class**.isAnnotationPresent(Inheritable.**class**));</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  **public** **static** **void** main(String[] args)</span><br><span class="line">  &#123;</span><br><span class="line">    InheritableSon is &#x3D; **new** InheritableSon();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">InheritableFather:true</span><br><span class="line">InheritableSon:true</span><br></pre></td></tr></table></figure>
+
+<p>现在，我们对 InheritableSon.java 进行修改：注释掉 “Inheritable 的 @Inherited 注解”。</p>
+<h2 id="InheritableSon-java"><a href="#InheritableSon-java" class="headerlink" title="InheritableSon.java"></a>InheritableSon.java</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">import** java.lang.annotation.Target;</span><br><span class="line">**import** java.lang.annotation.ElementType;</span><br><span class="line">**import** java.lang.annotation.Retention;</span><br><span class="line">**import** java.lang.annotation.RetentionPolicy;</span><br><span class="line">**import** java.lang.annotation.Inherited;</span><br><span class="line"></span><br><span class="line">**&#x2F;\**</span><br><span class="line"> \* 自定义的Annotation。</span><br><span class="line"> \*&#x2F;**</span><br><span class="line">@Target(ElementType.TYPE)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">*&#x2F;&#x2F;@Inherited*</span><br><span class="line">@**interface** Inheritable</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Inheritable</span><br><span class="line">**class** InheritableFather</span><br><span class="line">&#123;</span><br><span class="line">  **public** InheritableFather() &#123;</span><br><span class="line">    *&#x2F;&#x2F; InheritableBase是否具有 Inheritable Annotation*</span><br><span class="line">    System.out.println(&quot;InheritableFather:&quot;+InheritableFather.**class**.isAnnotationPresent(Inheritable.**class**));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">**&#x2F;\**</span><br><span class="line"> \* InheritableSon 类只是继承于 InheritableFather，</span><br><span class="line"> \*&#x2F;**</span><br><span class="line">**public** **class** InheritableSon **extends** InheritableFather</span><br><span class="line">&#123;</span><br><span class="line">  **public** InheritableSon() &#123;</span><br><span class="line">    **super**();   *&#x2F;&#x2F; 调用父类的构造函数*</span><br><span class="line">    *&#x2F;&#x2F; InheritableSon类是否具有 Inheritable Annotation*</span><br><span class="line">    System.out.println(&quot;InheritableSon:&quot;+InheritableSon.**class**.isAnnotationPresent(Inheritable.**class**));</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  **public** **static** **void** main(String[] args)</span><br><span class="line">  &#123;</span><br><span class="line">    InheritableSon is &#x3D; **new** InheritableSon();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">InheritableFather:true</span><br><span class="line">InheritableSon:false</span><br></pre></td></tr></table></figure>
+
+<h4 id="对比上面的两个结果，我们发现：当注解-Inheritable-被-Inherited-标注时，它具有继承性。否则，没有继承性。"><a href="#对比上面的两个结果，我们发现：当注解-Inheritable-被-Inherited-标注时，它具有继承性。否则，没有继承性。" class="headerlink" title="对比上面的两个结果，我们发现：当注解 Inheritable 被 @Inherited 标注时，它具有继承性。否则，没有继承性。"></a>对比上面的两个结果，我们发现：当<u>注解 Inheritable 被 @Inherited 标注</u>时，它具有继承性。否则，没有继承性。</h4><h2 id="Annotation-的作用"><a href="#Annotation-的作用" class="headerlink" title="Annotation 的作用"></a>Annotation 的作用</h2><p>Annotation 是一个辅助类，它在 Junit、Struts、Spring 等工具框架中被广泛使用。</p>
+<p>我们在编程中经常会使用到的 Annotation 作用有：</p>
+<h3 id="1）编译检查"><a href="#1）编译检查" class="headerlink" title="1）编译检查"></a>1）编译检查</h3><p>Annotation 具有”让编译器进行编译检查的作用”。</p>
+<h3 id="2-在反射中使用-Annotation"><a href="#2-在反射中使用-Annotation" class="headerlink" title="2) 在反射中使用 Annotation"></a>2) 在反射中使用 Annotation</h3><h3 id="3-根据-Annotation-生成帮助文档"><a href="#3-根据-Annotation-生成帮助文档" class="headerlink" title="3) 根据 Annotation 生成帮助文档"></a>3) 根据 Annotation 生成帮助文档</h3><p>通过给 Annotation 注解加上 @Documented 标签，能使该 Annotation 标签出现在 javadoc 中。</p>
+<h3 id="4-能够帮忙查看查看代码"><a href="#4-能够帮忙查看查看代码" class="headerlink" title="4) 能够帮忙查看查看代码"></a>4) 能够帮忙查看查看代码</h3><p>通过 @Override, @Deprecated 等，我们能很方便的了解程序的大致结构。</p>
+<p>另外，我们也可以通过自定义 Annotation 来实现一些功能。</p>
+<p>参考资料：</p>
+<blockquote>
+<p>原文地址：<a href="https://www.cnblogs.com/skywang12345/p/3344137.html" target="_blank" rel="noopener">https://www.cnblogs.com/skywang12345/p/3344137.html</a></p>
+<p>摘录自：<a href="https://www.runoob.com/w3cnote/java-annotation.html" target="_blank" rel="noopener">https://www.runoob.com/w3cnote/java-annotation.html</a></p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Java;Basic；Annotation；</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/18/java%E6%B3%A8%E8%A7%A3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-算法回顾" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/16/%E7%AE%97%E6%B3%95%E5%9B%9E%E9%A1%BE/">算法回顾</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/16/%E7%AE%97%E6%B3%95%E5%9B%9E%E9%A1%BE/" class="archive-article-date">
+  	<time datetime="2020-03-16T11:32:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>大学三年中上过很多语言课以及算法课，今天简单回忆一下。</p>
+<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><h4 id="冒泡排序："><a href="#冒泡排序：" class="headerlink" title="冒泡排序："></a>冒泡排序：</h4><p>最简单、粗暴的排序方法；大数后移到最后，</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/16/%E7%AE%97%E6%B3%95%E5%9B%9E%E9%A1%BE/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-postgreSQL-SHA-256" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -640,6 +855,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Personal study notes;Unprofessional</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Java;Basic；Annotation；</a>
               </li>
             
             <div class="clearfix"></div>
