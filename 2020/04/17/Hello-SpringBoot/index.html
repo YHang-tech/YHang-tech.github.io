@@ -59,7 +59,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">776字</span>
+            <span class="post-count">761字</span>
         </span>
     </span>
 
@@ -107,10 +107,10 @@
 <h2 id="RestController"><a href="#RestController" class="headerlink" title="@RestController"></a>@RestController</h2><h6 id="restController的作用等同于-Controller和-ResponseBody"><a href="#restController的作用等同于-Controller和-ResponseBody" class="headerlink" title="@restController的作用等同于@Controller和 @ResponseBody"></a>@restController的作用等同于@Controller和 @ResponseBody</h6><h4 id="Controller"><a href="#Controller" class="headerlink" title="@Controller"></a>@Controller</h4><p>在一个类上添加@Controller注解，表明了这个类是一个控制器类。</p>
 <p>但想要让这个类成为一个处理请求的处理器光有@Controller注解是不够的，他还需要进一步修炼才能成为一个处理器。</p>
 <p>在spring容器中创建该类的实例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;context:component-scan base-scan&#x3D;&quot;test.controller&quot; &#x2F;&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;context:component-scan base-scan=<span class="string">"test.controller"</span> /&gt;</span><br></pre></td></tr></table></figure>
 
 <p>这种方式会扫描指定包中的所有controller注解的类，并生成相应的bean注入到spring容器中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;context:component-scan base-package&#x3D;&quot;test&quot; &gt;</span><br><span class="line">  　　&lt;context:include-filter type&#x3D;&quot;annotation&quot; 														expression&#x3D;&quot;org.springframework.stereotype.Service&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;context:component-scan&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;context:component-scan base-<span class="keyword">package</span>=<span class="string">"test"</span> &gt;</span><br><span class="line">  　　&lt;context:include-filter type=<span class="string">"annotation"</span> 														expression=<span class="string">"org.springframework.stereotype.Service"</span>/&gt;</span><br><span class="line">&lt;/context:component-scan&gt;</span><br></pre></td></tr></table></figure>
 
 <p>上述代码表示扫描test包中除有@Service注解之外的类。</p>
 <hr>
@@ -120,9 +120,9 @@
 <p>@RequestMapping的地址可以是uri变量，并且通过@PathVariable注解获取作为方法的参数。也可以是通配符来筛选请求地址。</p>
 <hr>
 <h2 id="入口：SpringBootApplication-run"><a href="#入口：SpringBootApplication-run" class="headerlink" title="入口：SpringBootApplication.run()"></a>入口：SpringBootApplication.run()</h2><p>这个就是springboot的启动命令，运行main，执行这一句，SpringApplication是一个定义好的类。<strong>run的参数内是当前类的class，和main的参数</strong>，他会找到上面的@springbootapplication注解开始进行你所做的所有配置。</p>
-<h2 id="页面显示-index"><a href="#页面显示-index" class="headerlink" title="页面显示:index()"></a>页面显示:index()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(&quot;&#x2F;&quot;)</span><br><span class="line">	String index() &#123;</span><br><span class="line">		return &quot;hello spring boot&quot;;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="页面显示-index"><a href="#页面显示-index" class="headerlink" title="页面显示:index()"></a>页面显示:index()</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">	<span class="function">String <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"hello spring boot"</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 
-<p>返回一个string 的字符串到页面上。必须添加相关注解，这里是@RequestMapping，根据有限知识推测，该注解指明localhost：8080 是有效网址。</p>
+<p>返回一个string 的字符串到页面上。必须添加相关注解，这里是@RequestMapping，该注解指明localhost：8080 是有效网址。若@RequestMapping(“/hello”)，则localhost：8080/hello才为有效网址。</p>
 <p>若删去，网址错误：</p>
 <p><img src="/2020/04/17/Hello-SpringBoot/D:%5Clearnblog%5Cblog%5Csource_posts%5CHello-SpringBoot%5Cspc1_picture2.PNG" alt></p>
 <hr>
