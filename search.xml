@@ -85,7 +85,7 @@
     <url>/2020/04/17/Hello-SpringBoot/</url>
     <content><![CDATA[<h2 id="Hello-SpringBoot"><a href="#Hello-SpringBoot" class="headerlink" title="Hello SpringBoot"></a>Hello SpringBoot</h2><p>学习springboot ，从github上寻找了很多个关于springboot 的开源项目。最终敲定–SpringAll。</p>
 <p>第一章，开始搭建环境并成功运行项目。</p>
-<h3 id><a href="#" class="headerlink" title></a><img src="/2020/04/17/Hello-SpringBoot/learnblog\blog\source\_posts\Hello-SpringBoot\spb1_picture1.PNG" style="zoom: 150%;"></h3><hr>
+<h3 id><a href="#" class="headerlink" title></a><img src="/2020/04/17/Hello-SpringBoot/D:%5Clearnblog%5Cblog%5Csource_posts%5CHello-SpringBoot%5Cspb1_picture1.PNG" alt="spb1_picture1"></h3><hr>
 <h2 id="SpringBoot注解"><a href="#SpringBoot注解" class="headerlink" title="SpringBoot注解"></a>SpringBoot注解</h2><p>一般情况下，通过注解@SpringBootApplication来启动SpringBoot项目</p>
 <p>一般情况下，通过注解@SpringBoot和@RunWith(SpringRunner.class)来启动SpringBoot测试项目</p>
 <h4 id="SpringBootApplication-和-SpringBootTest-的区别"><a href="#SpringBootApplication-和-SpringBootTest-的区别" class="headerlink" title="@SpringBootApplication 和 @SpringBootTest 的区别"></a>@SpringBootApplication 和 @SpringBootTest 的区别</h4><p>这两个注解的区别的核心在于两个注解：@EnableAutoConfiguration、@ComponentScan(包含了两个filter)</p>
