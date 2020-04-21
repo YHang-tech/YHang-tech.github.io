@@ -59,7 +59,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">1.1k字</span>
+            <span class="post-count">1k字</span>
         </span>
     </span>
 
@@ -157,7 +157,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexController</span> </span>&#123;</span><br><span class="line">   <span class="meta">@Autowired</span></span><br><span class="line">   <span class="keyword">private</span> BlogProperties blogProperties;</span><br><span class="line">   <span class="meta">@Autowired</span></span><br><span class="line">   <span class="keyword">private</span> ConfigBean configBean;</span><br><span class="line">   </span><br><span class="line">   <span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">   <span class="function">String <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> blogProperties.getName()+blogProperties.getTitle();</span><br><span class="line">      <span class="comment">/*ConfigBean.getName()+"，"+ConfigBean.getAge();*/</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在控制器类中，使用@Autowired 自动连接配置类以创建实例。此时如一般类一样访问类方法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*application.properties 文件*/</span></span><br><span class="line">mrbird.blog.name=mrbird<span class="string">'s blog</span></span><br><span class="line"><span class="string">mrbird.blog.title=Spring Boot</span></span><br><span class="line"><span class="string">mrbird.blog.wholeTitle=$&#123;mrbird.blog.name&#125;--$&#123;mrbird.blog.title&#125;</span></span><br><span class="line"><span class="string">/*可以在配置文件中引用属性值*/</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">spring.profiles.active=prod</span></span><br><span class="line"><span class="string">    /*修改此属性可以引用不同文件，下两个文件分别存放不同的端口值。</span></span><br><span class="line"><span class="string">当然，直接使用server.port也可以直接达到修改端口值的目的，但目前还没这条语句的工作机制和为什么server.port在此文件中配置后可以直接生效*/</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">/*application-dev.properties */</span></span><br><span class="line"><span class="string">server.port=8080</span></span><br><span class="line"><span class="string">/*applocation-prod.properties */</span></span><br><span class="line"><span class="string">server.port=8081</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*application.properties 文件*/</span></span><br><span class="line">mrbird.blog.name=mrbird<span class="string">'s blog</span></span><br><span class="line"><span class="string">mrbird.blog.title=Spring Boot</span></span><br><span class="line"><span class="string">mrbird.blog.wholeTitle=$&#123;mrbird.blog.name&#125;--$&#123;mrbird.blog.title&#125;</span></span><br><span class="line"><span class="string">/*可以在配置文件中引用属性值*/</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">spring.profiles.active=prod</span></span><br><span class="line"><span class="string">    /*修改此属性可以引用不同文件，下两个文件分别存放不同的端口值。</span></span><br><span class="line"><span class="string">当然，直接使用server.port也可以直接达到修改端口值的目的</span></span><br><span class="line"><span class="string">server.port在此文件中配置后可以直接生效*/</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">/*application-dev.properties */</span></span><br><span class="line"><span class="string">server.port=8080</span></span><br><span class="line"><span class="string">/*applocation-prod.properties */</span></span><br><span class="line"><span class="string">server.port=8081</span></span><br></pre></td></tr></table></figure>
 
 
 
@@ -251,6 +251,15 @@
   
   
   <nav class="article-nav">
+    
+      <a href="/2020/04/21/Springboot-Oracle-database/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Springboot_Oracle_database
+          
+        </div>
+      </a>
     
     
       <a href="/2020/04/17/Hello-SpringBoot/" class="article-nav-link">

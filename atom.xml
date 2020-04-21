@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-04-19T03:03:06.949Z</updated>
+  <updated>2020-04-21T16:12:52.799Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Springboot_Oracle_database</title>
+    <link href="http://yoursite.com/2020/04/21/Springboot-Oracle-database/"/>
+    <id>http://yoursite.com/2020/04/21/Springboot-Oracle-database/</id>
+    <published>2020-04-21T14:35:04.000Z</published>
+    <updated>2020-04-21T16:12:52.799Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;SpringBoot-连接数据库&quot;&gt;&lt;a href=&quot;#SpringBoot-连接数据库&quot; class=&quot;headerlink&quot; title=&quot;SpringBoot 连接数据库&quot;&gt;&lt;/a&gt;SpringBoot 连接数据库&lt;/h2&gt;&lt;h4
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Java;SprinBoot;Oracle;" scheme="http://yoursite.com/tags/Java-SprinBoot-Oracle/"/>
+    
+  </entry>
+  
+  <entry>
     <title>SpringBoot_config</title>
     <link href="http://yoursite.com/2020/04/19/SpringBoot-config-1/"/>
     <id>http://yoursite.com/2020/04/19/SpringBoot-config-1/</id>
     <published>2020-04-19T03:01:24.000Z</published>
-    <updated>2020-04-19T03:03:06.949Z</updated>
+    <updated>2020-04-21T14:39:21.862Z</updated>
     
     <summary type="html">
     
@@ -46,7 +71,7 @@
     <link href="http://yoursite.com/2020/04/17/Hello-SpringBoot/"/>
     <id>http://yoursite.com/2020/04/17/Hello-SpringBoot/</id>
     <published>2020-04-17T04:57:33.000Z</published>
-    <updated>2020-04-19T03:33:06.388Z</updated>
+    <updated>2020-04-21T14:44:12.627Z</updated>
     
     <summary type="html">
     

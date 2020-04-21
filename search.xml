@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Springboot_Oracle_database</title>
+    <url>/2020/04/21/Springboot-Oracle-database/</url>
+    <content><![CDATA[<h2 id="SpringBoot-连接数据库"><a href="#SpringBoot-连接数据库" class="headerlink" title="SpringBoot 连接数据库"></a>SpringBoot 连接数据库</h2><h4 id="开源项目SpringAll所提供的第三章Spring-Boot-MyBatis"><a href="#开源项目SpringAll所提供的第三章Spring-Boot-MyBatis" class="headerlink" title="开源项目SpringAll所提供的第三章Spring-Boot-MyBatis"></a>开源项目SpringAll所提供的第三章Spring-Boot-MyBatis</h4><hr>
+<h2 id="ojdbc6-dependency错误–相关配置"><a href="#ojdbc6-dependency错误–相关配置" class="headerlink" title="ojdbc6-dependency错误–相关配置"></a>ojdbc6-dependency错误–相关配置</h2><p>首先试运行项目，自动Sync时出错，错误：</p>
+<ul>
+<li><p>Cannot resolve com.oracle:ojdbc6:11.2.0.4.0</p>
+<p>原因：由于oracle官方未授权，所以maven上无法直接下载ojdbc，需要自己下载，然后通过命令加载到本地maven库中</p>
+</li>
+</ul>
+<h3 id="解决办法："><a href="#解决办法：" class="headerlink" title="解决办法："></a>解决办法：</h3><p>手动下载并配置到自己的Maven库中。</p>
+<p>1 . 下载ojdbc，进入IDEA右侧的database选项，点击+号，选择Driver选项：</p>
+<img src="/2020/04/21/Springboot-Oracle-database/spb3_1.png" style="zoom:80%;">
+
+<p>2 . 在Drivers中选中Oracle，在右侧配置项中选择你所需要的ojdbc-version，选择过后，系统会为你自动下载，记住下载地址：</p>
+<p><img src="/2020/04/21/Springboot-Oracle-database/spb3_2.png" alt></p>
+<p>3 . 从下载地址中找到ojdbc6-11.2.0.4.jar ，例如我的地址是”C:\Users\yanghang.IntelliJIdea2019.2\config\jdbc-drivers\Oracle\11.2.0.4\ojdbc6-11.2.0.4.jar”，将它复制到E:\ 下。</p>
+<p>4 . 进入命令行，输入命令：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=<span class="number">11.2</span><span class="number">.0</span><span class="number">.4</span><span class="number">.0</span> -Dpackaging=jar -Dfile=E:\ ojdbc6<span class="number">-11.2</span><span class="number">.0</span><span class="number">.4</span>.jar</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以配置进自己的Maven库了。</p>
+<p>5 . 同时还需要修改pom.xml文件的引入依赖项。将groupId修改为com.oracle:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.oracle<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>ojdbc6<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>11.2.0.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>6 . 点击Reimport按钮，观察是否导入依赖。</p>
+<hr>
+<h2 id="配置Project-Data-Source"><a href="#配置Project-Data-Source" class="headerlink" title="配置Project Data Source"></a>配置Project Data Source</h2><p>要继续使用Oracle 数据库，还需要配置数据来源：</p>
+<img src="/2020/04/21/Springboot-Oracle-database/spb3_3.png" style="zoom:80%;">
+
+<p>点击+号，选择Data Source–&gt;Oracle 进行配置。</p>
+<p>Oracle默认URL为 thin：@localhost：1521：ORCL。选择一个有效的Oracle User和Password。</p>
+<img src="/2020/04/21/Springboot-Oracle-database/spb3_4.png" style="zoom:80%;">
+
+<p>点击Test Connection，此处很容易出现错误。</p>
+<p>我的错误是：connection refused:connect ，原因，没有下载Oracle客户端。</p>
+<hr>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p><a href="https://blog.csdn.net/zhihaoma/article/details/82896071" target="_blank" rel="noopener">https://blog.csdn.net/zhihaoma/article/details/82896071</a></p>
+]]></content>
+      <tags>
+        <tag>Java;SprinBoot;Oracle;</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot_config</title>
     <url>/2020/04/19/SpringBoot-config-1/</url>
     <content><![CDATA[<h2 id="SpringBoot-项目目录结构"><a href="#SpringBoot-项目目录结构" class="headerlink" title="SpringBoot 项目目录结构"></a>SpringBoot 项目目录结构</h2><h4 id="一、代码层结构"><a href="#一、代码层结构" class="headerlink" title="一、代码层结构"></a>一、代码层结构</h4><h5 id="根目录：com-bajins"><a href="#根目录：com-bajins" class="headerlink" title="根目录：com.bajins"></a>根目录：com.bajins</h5><ul>
@@ -67,7 +109,7 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexController</span> </span>&#123;</span><br><span class="line">   <span class="meta">@Autowired</span></span><br><span class="line">   <span class="keyword">private</span> BlogProperties blogProperties;</span><br><span class="line">   <span class="meta">@Autowired</span></span><br><span class="line">   <span class="keyword">private</span> ConfigBean configBean;</span><br><span class="line">   </span><br><span class="line">   <span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">   <span class="function">String <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> blogProperties.getName()+blogProperties.getTitle();</span><br><span class="line">      <span class="comment">/*ConfigBean.getName()+"，"+ConfigBean.getAge();*/</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在控制器类中，使用@Autowired 自动连接配置类以创建实例。此时如一般类一样访问类方法。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*application.properties 文件*/</span></span><br><span class="line">mrbird.blog.name=mrbird<span class="string">'s blog</span></span><br><span class="line"><span class="string">mrbird.blog.title=Spring Boot</span></span><br><span class="line"><span class="string">mrbird.blog.wholeTitle=$&#123;mrbird.blog.name&#125;--$&#123;mrbird.blog.title&#125;</span></span><br><span class="line"><span class="string">/*可以在配置文件中引用属性值*/</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">spring.profiles.active=prod</span></span><br><span class="line"><span class="string">    /*修改此属性可以引用不同文件，下两个文件分别存放不同的端口值。</span></span><br><span class="line"><span class="string">当然，直接使用server.port也可以直接达到修改端口值的目的，但目前还没这条语句的工作机制和为什么server.port在此文件中配置后可以直接生效*/</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">/*application-dev.properties */</span></span><br><span class="line"><span class="string">server.port=8080</span></span><br><span class="line"><span class="string">/*applocation-prod.properties */</span></span><br><span class="line"><span class="string">server.port=8081</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*application.properties 文件*/</span></span><br><span class="line">mrbird.blog.name=mrbird<span class="string">'s blog</span></span><br><span class="line"><span class="string">mrbird.blog.title=Spring Boot</span></span><br><span class="line"><span class="string">mrbird.blog.wholeTitle=$&#123;mrbird.blog.name&#125;--$&#123;mrbird.blog.title&#125;</span></span><br><span class="line"><span class="string">/*可以在配置文件中引用属性值*/</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">spring.profiles.active=prod</span></span><br><span class="line"><span class="string">    /*修改此属性可以引用不同文件，下两个文件分别存放不同的端口值。</span></span><br><span class="line"><span class="string">当然，直接使用server.port也可以直接达到修改端口值的目的</span></span><br><span class="line"><span class="string">server.port在此文件中配置后可以直接生效*/</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">/*application-dev.properties */</span></span><br><span class="line"><span class="string">server.port=8080</span></span><br><span class="line"><span class="string">/*applocation-prod.properties */</span></span><br><span class="line"><span class="string">server.port=8081</span></span><br></pre></td></tr></table></figure>
 
 
 
@@ -110,9 +152,11 @@
 <p>@RequestMapping的地址可以是uri变量，并且通过@PathVariable注解获取作为方法的参数。也可以是通配符来筛选请求地址。</p>
 <hr>
 <h2 id="入口：SpringBootApplication-run"><a href="#入口：SpringBootApplication-run" class="headerlink" title="入口：SpringBootApplication.run()"></a>入口：SpringBootApplication.run()</h2><p>这个就是springboot的启动命令，运行main，执行这一句，SpringApplication是一个定义好的类。<strong>run的参数内是当前类的class，和main的参数</strong>，他会找到上面的@springbootapplication注解开始进行你所做的所有配置。</p>
-<h2 id="页面显示-index"><a href="#页面显示-index" class="headerlink" title="页面显示:index()"></a>页面显示:index()</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">	<span class="function">String <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"hello spring boot"</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="页面显示-RequestMapping"><a href="#页面显示-RequestMapping" class="headerlink" title="页面显示:@RequestMapping"></a>页面显示:@RequestMapping</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">	<span class="function">String <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"hello spring boot"</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 
-<p>返回一个string 的字符串到页面上。必须添加相关注解，这里是@RequestMapping，该注解指明localhost：8080 是有效网址。若@RequestMapping(“/hello”)，则localhost：8080/hello才为有效网址。</p>
+<p>返回一个string 的字符串到页面上。</p>
+<p>@RequestMapping注解，当访问对应网址时，可以返回函数值。此处为localhost：8080有效。</p>
+<p>@RequestMapping 相当于@respondBody和@Mapping，@Mapping注解规定后缀网址，@RespondBody注解声明此函数可以映射属性值到网页中。</p>
 <p>若删去，网址错误：</p>
 <p><img src="/2020/04/17/Hello-SpringBoot/spc1_picture2.PNG" alt></p>
 <hr>
