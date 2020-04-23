@@ -59,7 +59,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">433字</span>
+            <span class="post-count">467字</span>
         </span>
     </span>
 
@@ -68,7 +68,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1分钟</span>
+            <span class="post-count">2分钟</span>
         </span>
     </span>
 </div>
@@ -104,7 +104,7 @@
 <p>1 . 下载ojdbc，进入IDEA右侧的database选项，点击+号，选择Driver选项：</p>
 <img src="/2020/04/21/Springboot-Oracle-database/spb3_1.png" style="zoom:80%;">
 
-<p>2 . 在Drivers中选中Oracle，在右侧配置项中选择你所需要的ojdbc-version，选择过后，系统会为你自动下载，记住下载地址：</p>
+<p>2 . 在Drivers中选中Oracle，在右侧配置项中选择你所需要的ojdbc-version，(有可能需要将Class从oracle.jdbc.driver.OracleDriver改为oracle.jdbc.OracleDriver  )选择过后，系统会为你自动下载，记住下载地址：</p>
 <p><img src="/2020/04/21/Springboot-Oracle-database/spb3_2.png" alt></p>
 <p>3 . 从下载地址中找到ojdbc6-11.2.0.4.jar ，例如我的地址是”C:\Users\yanghang.IntelliJIdea2019.2\config\jdbc-drivers\Oracle\11.2.0.4\ojdbc6-11.2.0.4.jar”，将它复制到E:\ 下。</p>
 <p>4 . 进入命令行，输入命令：</p>
@@ -125,6 +125,7 @@
 
 <p>点击Test Connection，此处很容易出现错误。</p>
 <p>我的错误是：connection refused:connect ，原因，没有下载Oracle客户端。</p>
+<p>下载过后，从SQLplus进入，创建一个User：TEST ，password： 123456 的用户。</p>
 <hr>
 <h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p><a href="https://blog.csdn.net/zhihaoma/article/details/82896071" target="_blank" rel="noopener">https://blog.csdn.net/zhihaoma/article/details/82896071</a></p>
 
