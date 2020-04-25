@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Springboot-Oracle-database(2)</title>
+    <url>/2020/04/23/Springboot-Oracle-database-2/</url>
+    <content><![CDATA[<h2 id="项目分析"><a href="#项目分析" class="headerlink" title="项目分析"></a>项目分析</h2><p>接上一章,完成相关配置后，终于可以运行项目，并成功在网页上，通过网址传参的方法显示数据库数据。</p>
+<p><img src="/2020/04/23/Springboot-Oracle-database-2/spb3.2-1.png" alt></p>
+<h2 id="Mapper：映射器-StudentMapper类"><a href="#Mapper：映射器-StudentMapper类" class="headerlink" title="Mapper：映射器-StudentMapper类"></a>Mapper：映射器-StudentMapper类</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">StudentMapper</span> </span>&#123;</span><br><span class="line">   <span class="meta">@Insert</span>(<span class="string">"insert into student(sno,sname,ssex) values(#&#123;sno,jdbcType=VARCHAR&#125;,#&#123;name,jdbcType=VARCHAR&#125;,#&#123;sex,jdbcType=CHAR&#125;)"</span>)</span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(Student student)</span></span>;</span><br><span class="line">   </span><br><span class="line">   <span class="meta">@Update</span>(<span class="string">"update student set sname=#&#123;name,jdbcType=VARCHAR&#125;,ssex=#&#123;sex,jdbcType=VARCHAR&#125; where sno=#&#123;sno,jdbcType=VARCHAR&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">update</span><span class="params">(Student student)</span></span>;</span><br><span class="line">   </span><br><span class="line">   <span class="meta">@Delete</span>(<span class="string">"delete from student where sno=#&#123;sno,jdbcType=VARCHAR&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">deleteBysno</span><span class="params">(String sno)</span></span>;</span><br><span class="line">   </span><br><span class="line">   <span class="meta">@Select</span>(<span class="string">"select * from student where sno=#&#123;sno,jdbcType=VARCHAR&#125;"</span>)</span><br><span class="line">   <span class="meta">@Results</span>(id = <span class="string">"student"</span>,value= &#123;</span><br><span class="line">       <span class="meta">@Result</span>(property = <span class="string">"sno"</span>, column = <span class="string">"sno"</span>, javaType = String<span class="class">.<span class="keyword">class</span>),</span></span><br><span class="line"><span class="class">         @<span class="title">Result</span>(<span class="title">property</span> </span>= <span class="string">"name"</span>, column = <span class="string">"sname"</span>, javaType = String<span class="class">.<span class="keyword">class</span>),</span></span><br><span class="line"><span class="class">         @<span class="title">Result</span>(<span class="title">property</span> </span>= <span class="string">"sex"</span>, column = <span class="string">"ssex"</span>, javaType = String<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">   &#125;)</span></span><br><span class="line"><span class="class">    <span class="title">Student</span> <span class="title">queryStudentBySno</span>(<span class="title">String</span> <span class="title">sno</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="component"><a href="#component" class="headerlink" title="@component"></a>@component</h4><p>实现类中用到了@Autowired注解，被注解的这个类是从Spring容器中取出来的，那调用的实现类也需要被Spring容器管理，加上@Componenat。</p>
+<p>与此类似的注解有：</p>
+<p>1、@controller （注入服务），标注控制层组件。</p>
+<p>2、@service （注入dao），标注业务层组件。</p>
+<p>3、@repository （实现dao访问），标注数据访问组件。</p>
+<p>4、@component （把普通pojo实例化到spring容器中，相当于配置文件中的<bean id class>），泛指组件。</bean></p>
+<p>　 <strong>@Component,@Service,@Controller,@Repository注解的类，并把这些类纳入进spring容器中管理</strong></p>
+<p>@component（），参数为组件名，可以通过此ID使用bean。</p>
+<h4 id="Mapper"><a href="#Mapper" class="headerlink" title="@Mapper"></a>@Mapper</h4><h5 id="Mapper注解，目的就是为了不再写mapper映射文件（不好写）。"><a href="#Mapper注解，目的就是为了不再写mapper映射文件（不好写）。" class="headerlink" title="@Mapper注解，目的就是为了不再写mapper映射文件（不好写）。"></a>@Mapper注解，目的就是为了不再写mapper映射文件（不好写）。</h5><p>添加@Mapper注解后，这个<strong>接口</strong>在编译时会生成相应的<strong>实现类</strong>。但不支持同名方法。</p>
+<h4 id="数据库操纵函数"><a href="#数据库操纵函数" class="headerlink" title="数据库操纵函数"></a>数据库操纵函数</h4><p>通过@Insert、@update、@select、@delete等注解，将SQL语言插入。</p>
+<p>参数传递可以单独用values指定如 values(#{sno,jdbcType=VARCHAR} ，用jdbcType限定类型，不然会出现传值为NULL错误。也可以嵌在SQL语句中。</p>
+<hr>
+<h2 id="项目思路："><a href="#项目思路：" class="headerlink" title="项目思路："></a>项目思路：</h2><p>从controller开始，在TestController类中有：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StudentService studentService;</span><br></pre></td></tr></table></figure>
+
+<p>自动装配StudentService，寻找bean ID为studentservice的类，接口StudentService的实现类StudentServiceImp，有注解：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span>(<span class="string">"studentService"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StudentServiceImp</span> <span class="keyword">implements</span> <span class="title">StudentService</span></span></span><br></pre></td></tr></table></figure>
+
+<p>所以应该是用StudentServiceImp，去实例化了studentService。</p>
+<p>而StudentServiceImp又有：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StudentMapper studentMapper;</span><br></pre></td></tr></table></figure>
+
+<p>自动装配studentMapper，寻找bean ID为StudentMapper的类，在mapper目录下的StudentMapper</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">StudentMapper</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<hr>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p><a href="https://www.cnblogs.com/lyjing/p/8427832.html" target="_blank" rel="noopener">https://www.cnblogs.com/lyjing/p/8427832.html</a></p>
+<p><a href="https://blog.csdn.net/phenomenonsTell/article/details/79033144?depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2&utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2" target="_blank" rel="noopener">我也不知道该叫啥</a></p>
+]]></content>
+      <tags>
+        <tag>Java;SpringBoot;Oracle;</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Springboot_Oracle_database</title>
     <url>/2020/04/21/Springboot-Oracle-database/</url>
     <content><![CDATA[<h2 id="SpringBoot-连接数据库"><a href="#SpringBoot-连接数据库" class="headerlink" title="SpringBoot 连接数据库"></a>SpringBoot 连接数据库</h2><h4 id="开源项目SpringAll所提供的第三章Spring-Boot-MyBatis"><a href="#开源项目SpringAll所提供的第三章Spring-Boot-MyBatis" class="headerlink" title="开源项目SpringAll所提供的第三章Spring-Boot-MyBatis"></a>开源项目SpringAll所提供的第三章Spring-Boot-MyBatis</h4><hr>

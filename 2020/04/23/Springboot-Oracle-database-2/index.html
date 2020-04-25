@@ -6,7 +6,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    Springboot_Oracle_database |  YHang-tech&#39;s Personal Blog
+    Springboot-Oracle-database(2) |  YHang-tech&#39;s Personal Blog
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -31,7 +31,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-Springboot-Oracle-database" class="article article-type-post" itemscope
+  <article id="post-Springboot-Oracle-database-2" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -39,7 +39,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  Springboot_Oracle_database
+  Springboot-Oracle-database(2)
 </h1>
  
 
@@ -48,8 +48,8 @@
 
     
     <div class="article-meta">
-      <a href="/2020/04/21/Springboot-Oracle-database/" class="article-date">
-  <time datetime="2020-04-21T14:35:04.000Z" itemprop="datePublished">2020-04-21</time>
+      <a href="/2020/04/23/Springboot-Oracle-database-2/" class="article-date">
+  <time datetime="2020-04-23T15:27:35.000Z" itemprop="datePublished">2020-04-23</time>
 </a>
       
       
@@ -59,7 +59,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">467字</span>
+            <span class="post-count">556字</span>
         </span>
     </span>
 
@@ -93,41 +93,42 @@
       
 
       
-      <h2 id="SpringBoot-连接数据库"><a href="#SpringBoot-连接数据库" class="headerlink" title="SpringBoot 连接数据库"></a>SpringBoot 连接数据库</h2><h4 id="开源项目SpringAll所提供的第三章Spring-Boot-MyBatis"><a href="#开源项目SpringAll所提供的第三章Spring-Boot-MyBatis" class="headerlink" title="开源项目SpringAll所提供的第三章Spring-Boot-MyBatis"></a>开源项目SpringAll所提供的第三章Spring-Boot-MyBatis</h4><hr>
-<h2 id="ojdbc6-dependency错误–相关配置"><a href="#ojdbc6-dependency错误–相关配置" class="headerlink" title="ojdbc6-dependency错误–相关配置"></a>ojdbc6-dependency错误–相关配置</h2><p>首先试运行项目，自动Sync时出错，错误：</p>
-<ul>
-<li><p>Cannot resolve com.oracle:ojdbc6:11.2.0.4.0</p>
-<p>原因：由于oracle官方未授权，所以maven上无法直接下载ojdbc，需要自己下载，然后通过命令加载到本地maven库中</p>
-</li>
-</ul>
-<h3 id="解决办法："><a href="#解决办法：" class="headerlink" title="解决办法："></a>解决办法：</h3><p>手动下载并配置到自己的Maven库中。</p>
-<p>1 . 下载ojdbc，进入IDEA右侧的database选项，点击+号，选择Driver选项：</p>
-<img src="/2020/04/21/Springboot-Oracle-database/spb3_1.png" style="zoom:80%;">
+      <h2 id="项目分析"><a href="#项目分析" class="headerlink" title="项目分析"></a>项目分析</h2><p>接上一章,完成相关配置后，终于可以运行项目，并成功在网页上，通过网址传参的方法显示数据库数据。</p>
+<p><img src="/2020/04/23/Springboot-Oracle-database-2/spb3.2-1.png" alt></p>
+<h2 id="Mapper：映射器-StudentMapper类"><a href="#Mapper：映射器-StudentMapper类" class="headerlink" title="Mapper：映射器-StudentMapper类"></a>Mapper：映射器-StudentMapper类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">StudentMapper</span> </span>&#123;</span><br><span class="line">   <span class="meta">@Insert</span>(<span class="string">"insert into student(sno,sname,ssex) values(#&#123;sno,jdbcType=VARCHAR&#125;,#&#123;name,jdbcType=VARCHAR&#125;,#&#123;sex,jdbcType=CHAR&#125;)"</span>)</span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(Student student)</span></span>;</span><br><span class="line">   </span><br><span class="line">   <span class="meta">@Update</span>(<span class="string">"update student set sname=#&#123;name,jdbcType=VARCHAR&#125;,ssex=#&#123;sex,jdbcType=VARCHAR&#125; where sno=#&#123;sno,jdbcType=VARCHAR&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">update</span><span class="params">(Student student)</span></span>;</span><br><span class="line">   </span><br><span class="line">   <span class="meta">@Delete</span>(<span class="string">"delete from student where sno=#&#123;sno,jdbcType=VARCHAR&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">deleteBysno</span><span class="params">(String sno)</span></span>;</span><br><span class="line">   </span><br><span class="line">   <span class="meta">@Select</span>(<span class="string">"select * from student where sno=#&#123;sno,jdbcType=VARCHAR&#125;"</span>)</span><br><span class="line">   <span class="meta">@Results</span>(id = <span class="string">"student"</span>,value= &#123;</span><br><span class="line">       <span class="meta">@Result</span>(property = <span class="string">"sno"</span>, column = <span class="string">"sno"</span>, javaType = String<span class="class">.<span class="keyword">class</span>),</span></span><br><span class="line"><span class="class">         @<span class="title">Result</span>(<span class="title">property</span> </span>= <span class="string">"name"</span>, column = <span class="string">"sname"</span>, javaType = String<span class="class">.<span class="keyword">class</span>),</span></span><br><span class="line"><span class="class">         @<span class="title">Result</span>(<span class="title">property</span> </span>= <span class="string">"sex"</span>, column = <span class="string">"ssex"</span>, javaType = String<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">   &#125;)</span></span><br><span class="line"><span class="class">    <span class="title">Student</span> <span class="title">queryStudentBySno</span>(<span class="title">String</span> <span class="title">sno</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>2 . 在Drivers中选中Oracle，在右侧配置项中选择你所需要的ojdbc-version，(有可能需要将Class从oracle.jdbc.driver.OracleDriver改为oracle.jdbc.OracleDriver  )选择过后，系统会为你自动下载，记住下载地址：</p>
-<p><img src="/2020/04/21/Springboot-Oracle-database/spb3_2.png" alt></p>
-<p>3 . 从下载地址中找到ojdbc6-11.2.0.4.jar ，例如我的地址是”C:\Users\yanghang.IntelliJIdea2019.2\config\jdbc-drivers\Oracle\11.2.0.4\ojdbc6-11.2.0.4.jar”，将它复制到E:\ 下。</p>
-<p>4 . 进入命令行，输入命令：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=<span class="number">11.2</span><span class="number">.0</span><span class="number">.4</span><span class="number">.0</span> -Dpackaging=jar -Dfile=E:\ ojdbc6<span class="number">-11.2</span><span class="number">.0</span><span class="number">.4</span>.jar</span><br></pre></td></tr></table></figure>
-
-<p>这样就可以配置进自己的Maven库了。</p>
-<p>5 . 同时还需要修改pom.xml文件的引入依赖项。将groupId修改为com.oracle:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.oracle<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>ojdbc6<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>11.2.0.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>6 . 点击Reimport按钮，观察是否导入依赖。</p>
+<h4 id="component"><a href="#component" class="headerlink" title="@component"></a>@component</h4><p>实现类中用到了@Autowired注解，被注解的这个类是从Spring容器中取出来的，那调用的实现类也需要被Spring容器管理，加上@Componenat。</p>
+<p>与此类似的注解有：</p>
+<p>1、@controller （注入服务），标注控制层组件。</p>
+<p>2、@service （注入dao），标注业务层组件。</p>
+<p>3、@repository （实现dao访问），标注数据访问组件。</p>
+<p>4、@component （把普通pojo实例化到spring容器中，相当于配置文件中的<bean id class>），泛指组件。</bean></p>
+<p>　 <strong>@Component,@Service,@Controller,@Repository注解的类，并把这些类纳入进spring容器中管理</strong></p>
+<p>@component（），参数为组件名，可以通过此ID使用bean。</p>
+<h4 id="Mapper"><a href="#Mapper" class="headerlink" title="@Mapper"></a>@Mapper</h4><h5 id="Mapper注解，目的就是为了不再写mapper映射文件（不好写）。"><a href="#Mapper注解，目的就是为了不再写mapper映射文件（不好写）。" class="headerlink" title="@Mapper注解，目的就是为了不再写mapper映射文件（不好写）。"></a>@Mapper注解，目的就是为了不再写mapper映射文件（不好写）。</h5><p>添加@Mapper注解后，这个<strong>接口</strong>在编译时会生成相应的<strong>实现类</strong>。但不支持同名方法。</p>
+<h4 id="数据库操纵函数"><a href="#数据库操纵函数" class="headerlink" title="数据库操纵函数"></a>数据库操纵函数</h4><p>通过@Insert、@update、@select、@delete等注解，将SQL语言插入。</p>
+<p>参数传递可以单独用values指定如 values(#{sno,jdbcType=VARCHAR} ，用jdbcType限定类型，不然会出现传值为NULL错误。也可以嵌在SQL语句中。</p>
 <hr>
-<h2 id="配置Project-Data-Source"><a href="#配置Project-Data-Source" class="headerlink" title="配置Project Data Source"></a>配置Project Data Source</h2><p>要继续使用Oracle 数据库，还需要配置数据来源：</p>
-<img src="/2020/04/21/Springboot-Oracle-database/spb3_3.png" style="zoom:80%;">
+<h2 id="项目思路："><a href="#项目思路：" class="headerlink" title="项目思路："></a>项目思路：</h2><p>从controller开始，在TestController类中有：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StudentService studentService;</span><br></pre></td></tr></table></figure>
 
-<p>点击+号，选择Data Source–&gt;Oracle 进行配置。</p>
-<p>Oracle默认URL为 thin：@localhost：1521：ORCL。选择一个有效的Oracle User和Password。</p>
-<img src="/2020/04/21/Springboot-Oracle-database/spb3_4.png" style="zoom:80%;">
+<p>自动装配StudentService，寻找bean ID为studentservice的类，接口StudentService的实现类StudentServiceImp，有注解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span>(<span class="string">"studentService"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StudentServiceImp</span> <span class="keyword">implements</span> <span class="title">StudentService</span></span></span><br></pre></td></tr></table></figure>
 
-<p>点击Test Connection，此处很容易出现错误。</p>
-<p>我的错误是：connection refused:connect ，原因，没有下载Oracle客户端。</p>
-<p>下载过后，从SQLplus进入，创建一个User：TEST ，password： 123456 的用户。</p>
+<p>所以应该是用StudentServiceImp，去实例化了studentService。</p>
+<p>而StudentServiceImp又有：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StudentMapper studentMapper;</span><br></pre></td></tr></table></figure>
+
+<p>自动装配studentMapper，寻找bean ID为StudentMapper的类，在mapper目录下的StudentMapper</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">StudentMapper</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
 <hr>
-<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p><a href="https://blog.csdn.net/zhihaoma/article/details/82896071" target="_blank" rel="noopener">https://blog.csdn.net/zhihaoma/article/details/82896071</a></p>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p><a href="https://www.cnblogs.com/lyjing/p/8427832.html" target="_blank" rel="noopener">https://www.cnblogs.com/lyjing/p/8427832.html</a></p>
+<p><a href="https://blog.csdn.net/phenomenonsTell/article/details/79033144?depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2&utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2" target="_blank" rel="noopener">我也不知道该叫啥</a></p>
 
       
       <!-- reward -->
@@ -197,14 +198,14 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/04/21/Springboot-Oracle-database/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/04/23/Springboot-Oracle-database-2/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java-SprinBoot-Oracle/" rel="tag">Java;SprinBoot;Oracle;</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java-SpringBoot-Oracle/" rel="tag">Java;SpringBoot;Oracle;</a></li></ul>
 
 
     </footer>
@@ -215,19 +216,10 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/04/23/Springboot-Oracle-database-2/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            Springboot-Oracle-database(2)
-          
-        </div>
-      </a>
     
-    
-      <a href="/2020/04/19/SpringBoot-config-1/" class="article-nav-link">
+      <a href="/2020/04/21/Springboot-Oracle-database/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">SpringBoot_config</div>
+        <div class="article-nav-title">Springboot_Oracle_database</div>
       </a>
     
   </nav>

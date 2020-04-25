@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-04-23T14:59:46.439Z</updated>
+  <updated>2020-04-24T15:39:55.204Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Springboot-Oracle-database(2)</title>
+    <link href="http://yoursite.com/2020/04/23/Springboot-Oracle-database-2/"/>
+    <id>http://yoursite.com/2020/04/23/Springboot-Oracle-database-2/</id>
+    <published>2020-04-23T15:27:35.000Z</published>
+    <updated>2020-04-24T15:39:55.204Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;项目分析&quot;&gt;&lt;a href=&quot;#项目分析&quot; class=&quot;headerlink&quot; title=&quot;项目分析&quot;&gt;&lt;/a&gt;项目分析&lt;/h2&gt;&lt;p&gt;接上一章,完成相关配置后，终于可以运行项目，并成功在网页上，通过网址传参的方法显示数据库数据。&lt;/p&gt;
+&lt;p&gt;&lt;img
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Java;SpringBoot;Oracle;" scheme="http://yoursite.com/tags/Java-SpringBoot-Oracle/"/>
+    
+  </entry>
   
   <entry>
     <title>Springboot_Oracle_database</title>
