@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-04-24T15:39:55.204Z</updated>
+  <updated>2020-05-02T07:09:42.388Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SpringBoot-jdbcTemplate</title>
+    <link href="http://yoursite.com/2020/04/30/SpringBoot-jdbcTemplate/"/>
+    <id>http://yoursite.com/2020/04/30/SpringBoot-jdbcTemplate/</id>
+    <published>2020-04-30T08:46:14.000Z</published>
+    <updated>2020-05-02T07:09:42.388Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;SpringAll—-0-4-Spring-Boot-JdbcTemplate&quot;&gt;&lt;a href=&quot;#SpringAll—-0-4-Spring-Boot-JdbcTemplate&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Java;SpringBoot;" scheme="http://yoursite.com/tags/Java-SpringBoot/"/>
+    
+  </entry>
   
   <entry>
     <title>Springboot-Oracle-database(2)</title>
